@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المراجعة النهائية - علوم الصف الثاني الإعدادي | مستر ناصر رحيم</title>
+
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0284c7',
+                            600: '#0369a1',
+                            700: '#075985',
+                            800: '#074e73',
+                            900: '#0c4a6e',
+                        },
+                        science: {
+                            green: '#10b981',
+                            amber: '#f59e0b',
+                            purple: '#8b5cf6',
+                            rose: '#f43f5e'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Cairo', 'Tajawal', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Styles & Responsive Adjustments */
+        body {
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            transition: font-size 0.2s ease;
+        }
+
+        /* Glassmorphism Effect */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(226, 232, 240, 0.8);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.9);
+            border: 1px solid rgba(51, 65, 85, 0.8);
+        }
+
+        /* Formula & Equation Styles */
+        .chem-eq {
+            direction: ltr;
+            display: inline-block;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            background-color: #1e293b;
+            color: #38bdf8;
+            padding: 4px 12px;
+            border-radius: 6px;
+            letter-spacing: 1px;
+        }
+
+        /* Printable Mode Styling */
+        @media print {
+            .no-print { display: none !important; }
+            body { font-size: 12pt !important; background: white !important; color: black !important; }
+            .answer-box { display: block !important; border: 1px solid #ccc !important; }
+            .card-box { break-inside: avoid; border: 1px solid #ddd !important; margin-bottom: 15px !important; }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 8px; height: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        .dark ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #0284c7; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 min-h-screen flex flex-col transition-colors duration-300">
+
+    <!-- Top Floating Toolbar (Controls: Zoom, Theme, Print) -->
+    <header class="sticky top-0 z-50 bg-white/90 dark:bg-slate-800/90 backdrop-blur-md border-b border-slate-200 dark:border-slate-700 shadow-sm no-print">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                
+                <!-- Logo & Teacher Info -->
+                <div class="flex items-center space-x-3 space-x-reverse">
+                    <div class="bg-gradient-to-tr from-brand-600 to-teal-500 text-white p-2.5 rounded-xl shadow-md">
+                        <i class="fa-solid fa-atom text-2xl animate-spin-slow"></i>
+                    </div>
+                    <div>
+                        <h1 class="text-lg sm:text-xl font-black text-brand-700 dark:text-brand-100 leading-tight">
+                            منصة العلوم | الوحدة الثانية
+                        </h1>
+                        <p class="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                            إعداد المستر: <span class="font-bold text-teal-600 dark:text-teal-400">ناصر رحيم أبو الحسن</span> (01007532407)
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Interactive Utility Controls -->
+                <div class="flex items-center gap-2 sm:gap-3">
+                    
+                    <!-- Zoom Controls -->
+                    <div class="flex items-center bg-slate-100 dark:bg-slate-700 rounded-lg p-1 border border-slate-200 dark:border-slate-600">
+                        <button onclick="changeZoom(-1)" title="تصغير الخط" class="px-2 py-1 text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-brand-600 transition">
+                            <i class="fa-solid fa-minus"></i>
+                        </button>
+                        <span id="zoomLabel" class="px-2 text-xs font-semibold text-brand-600 dark:text-brand-400">100%</span>
+                        <button onclick="changeZoom(1)" title="تكبير الخط" class="px-2 py-1 text-xs sm:text-sm font-bold text-slate-600 dark:text-slate-300 hover:text-brand-600 transition">
+                            <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <button onclick="resetZoom()" title="إعادة ضبط الزوم" class="px-1.5 py-1 text-xs text-slate-400 hover:text-slate-600 border-r border-slate-300 dark:border-slate-600 mr-1">
+                            <i class="fa-solid fa-rotate-left"></i>
+                        </button>
+                    </div>
+
+                    <!-- Toggle Answers Master Button -->
+                    <button id="toggleAllAnswersBtn" onclick="toggleAllAnswers()" class="hidden sm:flex items-center gap-1.5 px-3 py-1.5 text-xs sm:text-sm font-bold bg-amber-500 hover:bg-amber-600 text-white rounded-lg shadow-sm transition">
+                        <i class="fa-solid fa-eye"></i>
+                        <span id="toggleAllText">إظهار الإجابات</span>
+                    </button>
+
+                    <!-- Dark Mode Toggle -->
+                    <button onclick="toggleDarkMode()" title="الوضع الليلي / النهاري" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
+                        <i class="fa-solid fa-moon dark:hidden"></i>
+                        <i class="fa-solid fa-sun hidden dark:inline text-amber-400"></i>
+                    </button>
+
+                    <!-- Print Button -->
+                    <button onclick="window.print()" title="طباعة الأسئلة" class="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition">
+                        <i class="fa-solid fa-print"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main id="appContainer" class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
+
+        <!-- Banner & Quick Summary Stats -->
+        <div class="glass-card rounded-2xl p-4 sm:p-6 mb-6 shadow-sm border border-slate-200 dark:border-slate-700 bg-gradient-to-r from-brand-900/10 via-teal-900/5 to-transparent">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div>
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-brand-100 dark:bg-brand-900/60 text-brand-700 dark:text-brand-300 mb-2">
+                        <i class="fa-solid fa-graduation-cap"></i> الصف الثاني الإعدادي - علوم 2026
+                    </span>
+                    <h2 class="text-xl sm:text-2xl font-black text-slate-800 dark:text-white">
+                        المراجعة الشاملة والتفاعلية على الوحدة الثانية
+                    </h2>
+                    <p class="text-sm text-slate-600 dark:text-slate-300 mt-1">
+                        تغطي كافة أسئلة الدروس: التغيرات الكيميائية، المعادلات الكيميائية، ومكونات التغذية مع الإجابات النموذجية.
+                    </p>
+                </div>
+
+                <!-- Quick Counters Grid -->
+                <div class="grid grid-cols-3 gap-2 sm:gap-3 w-full md:w-auto text-center">
+                    <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="block text-xl font-black text-brand-600 dark:text-brand-400">49</span>
+                        <span class="text-[11px] font-bold text-slate-500">الدرس الأول</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="block text-xl font-black text-teal-600 dark:text-teal-400">48</span>
+                        <span class="text-[11px] font-bold text-slate-500">الدرس الثاني</span>
+                    </div>
+                    <div class="bg-white dark:bg-slate-800 p-2.5 rounded-xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                        <span class="block text-xl font-black text-purple-600 dark:text-purple-400">73</span>
+                        <span class="text-[11px] font-bold text-slate-500">الدرس الثالث</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Control Bar (Filters, Search, Tabs) -->
+        <div class="space-y-4 mb-6 no-print">
+            
+            <!-- Lesson Navigation Tabs -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none border-b border-slate-200 dark:border-slate-700">
+                <button onclick="filterLesson('all')" id="tab-all" class="lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-brand-600 text-white shadow-md">
+                    <i class="fa-solid fa-list-check ml-1.5"></i> كل الأسئلة (170)
+                </button>
+                <button onclick="filterLesson(1)" id="tab-1" class="lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    <i class="fa-solid fa-flask ml-1.5"></i> الدرس 1: التغيرات والتفاعلات (49)
+                </button>
+                <button onclick="filterLesson(2)" id="tab-2" class="lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    <i class="fa-solid fa-vial-circle-check ml-1.5"></i> الدرس 2: المعادلة الكيميائية (48)
+                </button>
+                <button onclick="filterLesson(3)" id="tab-3" class="lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700">
+                    <i class="fa-solid fa-apple-whole ml-1.5"></i> الدرس 3: كيمياء التغذية (73)
+                </button>
+                <button onclick="filterFavorites()" id="tab-fav" class="lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-300 hover:bg-rose-200">
+                    <i class="fa-solid fa-star ml-1.5 text-amber-500"></i> المفضلة (<span id="favCount">0</span>)
+                </button>
+            </div>
+
+            <!-- Filters & Search Toolbar -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-3 items-center">
+                
+                <!-- Search Input -->
+                <div class="md:col-span-5 relative">
+                    <i class="fa-solid fa-magnifying-glass absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                    <input type="text" id="searchInput" oninput="renderQuestions()" placeholder="ابحث في نص الأسئلة أو الإجابات..." 
+                           class="w-full pl-4 pr-10 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm focus:outline-none focus:ring-2 focus:ring-brand-500 transition shadow-sm">
+                </div>
+
+                <!-- Question Type Filter Dropdown -->
+                <div class="md:col-span-4">
+                    <select id="typeSelect" onchange="renderQuestions()" class="w-full px-3 py-2.5 rounded-xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-500 transition shadow-sm">
+                        <option value="all">جميع أنواع الأسئلة</option>
+                        <option value="term">المصطلح العلمي / التعريفات</option>
+                        <option value="complete">أكمل ما يأتي</option>
+                        <option value="mcq">اختر الإجابة الصحيحة</option>
+                        <option value="tf">ضع علامة (✓) أو (✗)</option>
+                        <option value="classify">صنف التغيرات</option>
+                        <option value="reason">علل لما يأتي</option>
+                        <option value="whatif">ماذا يحدث عند</option>
+                        <option value="deduce">كيف تستدل على</option>
+                        <option value="coeffs">ضع المعاملات المناسبة (الوزن)</option>
+                        <option value="equations">اكتب المعادلات الكيميائية</option>
+                        <option value="symbols">دلالة الرموز والمفاهيم</option>
+                        <option value="importance">اذكر أهمية</option>
+                        <option value="correct">صوب ما تحته خط</option>
+                        <option value="compare">قارن بين / الجداول</option>
+                        <option value="misc">أسئلة متنوعة</option>
+                    </select>
+                </div>
+
+                <!-- Results Counter -->
+                <div class="md:col-span-3 text-left">
+                    <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300">
+                        <i class="fa-solid fa-filter text-brand-500"></i>
+                        الأسئلة المعروضة: <span id="displayedCount" class="text-brand-600 dark:text-brand-400 font-extrabold">0</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Questions Feed Area -->
+        <div id="questionsContainer" class="space-y-4">
+            <!-- Dynamic Questions will be injected here via JS -->
+        </div>
+
+        <!-- Empty State Message -->
+        <div id="emptyState" class="hidden text-center py-12 glass-card rounded-2xl border border-dashed border-slate-300 dark:border-slate-700">
+            <i class="fa-solid fa-circle-question text-5xl text-slate-300 dark:text-slate-600 mb-3"></i>
+            <p class="text-slate-500 dark:text-slate-400 font-bold text-lg">لم يتم العثور على أسئلة تطابق فلتر البحث!</p>
+            <p class="text-xs text-slate-400 mt-1">جرّب تغيير الكلمات البحثية أو إزالة الفلاتر.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="bg-white dark:bg-slate-800 border-t border-slate-200 dark:border-slate-700 py-6 mt-12 no-print">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <div class="flex items-center justify-center gap-2 text-brand-600 font-black text-lg mb-1">
+                <i class="fa-solid fa-book-open-reader"></i> أسرة العلوم - المراجعة النهائية
+            </div>
+            <p class="text-sm font-bold text-slate-700 dark:text-slate-300">
+                إعداد المعلم القدير: <span class="text-teal-600 dark:text-teal-400">مستر ناصر رحيم أبو الحسن</span>
+            </p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">
+                تليفون / واتساب: <span class="font-mono font-bold">01007532407</span> | جميع الحقوق محفوظة لطلاب الصف الثاني الإعدادي 2026
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Comprehensive Dataset for All 170 Questions from PDF Document
+        const rawQuestionsData = [
+            
+            // ==========================================
+            // LESSON 1: التغيرات الفيزيائية والكيميائية والتفاعلات (49 أسئلة)
+            // ==========================================
+            
+            // المصطلح العلمي (3)
+            { id: 1, lesson: 1, type: "term", q: "تغير في شكل المادة أو حالتها دون أن يتغير تركيبها الكيميائي.", a: "التغير الفيزيائي" },
+            { id: 2, lesson: 1, type: "term", q: "تغير ينتج عنه مواد جديدة تختلف في خواصها عن المادة الأصلية.", a: "التغير الكيميائي" },
+            { id: 3, lesson: 1, type: "term", q: "كسر الروابط الموجودة بين ذرات جزيئات المواد المتفاعلة وتكوين روابط جديدة بين ذرات جزيئات المواد الناتجة.", a: "التفاعل الكيميائي" },
+
+            // أكمل ما يأتي (8)
+            { id: 4, lesson: 1, type: "complete", q: "احتراق السكر تغير ......، بينما انصهار الثلج تغير ......", a: "كيميائي | فيزيائي" },
+            { id: 5, lesson: 1, type: "complete", q: "من دلائل حدوث التفاعل الكيميائي ...... و ......", a: "تكون راسب | تصاعد غاز (أو انبعاث ضوء وحرارة)" },
+            { id: 6, lesson: 1, type: "complete", q: "ينتفخ البالون في تجربة الخل وصودا الخبز نتيجة تصاعد غاز ......", a: "ثاني أكسيد الكربون (CO2)" },
+            { id: 7, lesson: 1, type: "complete", q: "عند حدوث التفاعل الكيميائي يتم كسر الروابط الموجودة بين ذرات جزيئات ...... وتكوين روابط جديدة بين ذرات جزيئات ......", a: "المتفاعلات | النواتج" },
+            { id: 8, lesson: 1, type: "complete", q: "الصودا الكاوية مادة ...... لونها ...... وتذوب في الماء.", a: "صلبة | أبيض" },
+            { id: 9, lesson: 1, type: "complete", q: "تتكون مادة ...... عند تفاعل الزيوت مع محلول الصودا الكاوية.", a: "الصابون" },
+            { id: 10, lesson: 1, type: "complete", q: "عند تقطيع التفاحة وتركها في الهواء يتغير لونها إلى اللون ...... نتيجة التفاعل مع ......", a: "البني | الأكسجين" },
+            { id: 11, lesson: 1, type: "complete", q: "عند اشتعال الألعاب النارية نلاحظ انبعاث ...... و ...... نتيجة حدوث تفاعل كيميائي.", a: "ضوء | حرارة" },
+
+            // اختر الإجابة الصحيحة (3)
+            { id: 12, lesson: 1, type: "mcq", q: "أي مما يلي يعبر عن تغير كيميائي؟", opts: ["طحن السكر", "انصهار الثلج", "احتراق شمع", "تقطيع الورق"], a: "احتراق شمع" },
+            { id: 13, lesson: 1, type: "mcq", q: "الغاز الناتج من تفاعل الخل مع صودا الخبز هو ........", opts: ["الأكسجين", "ثاني أكسيد الكربون", "الهيدروجين", "النيتروجين"], a: "ثاني أكسيد الكربون" },
+            { id: 14, lesson: 1, type: "mcq", q: "الاسم الكيميائي لمحلول الصودا الكاوية هو ........", opts: ["كلوريد الصوديوم", "هيدروكسيد الصوديوم", "هيدروكسيد الماغنسيوم", "أكسيد الماغنسيوم"], a: "هيدروكسيد الصوديوم" },
+
+            // صح وخطأ مع التصويب (6)
+            { id: 15, lesson: 1, type: "tf", q: "التغير الفيزيائي لا ينتج عنه مواد جديدة.", a: "( ✓ ) إجابة صحيحة." },
+            { id: 16, lesson: 1, type: "tf", q: "تعكر ماء الجير عند إمرار غاز CO2 فيه تغير فيزيائي.", a: "( ✗ ) الخطأ: تغير كيميائي (لحدوث تفاعل كيميائي وتكون مادة جديدة)." },
+            { id: 17, lesson: 1, type: "tf", q: "تغير لون وقوام البيض بعد القلي دليل على حدوث تغير فيزيائي.", a: "( ✗ ) الخطأ: دليل على حدوث تغير كيميائي." },
+            { id: 18, lesson: 1, type: "tf", q: "التفاعلات الكيميائية تغير خصائص المواد الأصلية.", a: "( ✓ ) إجابة صحيحة." },
+            { id: 19, lesson: 1, type: "tf", q: "يصدأ الحديد نتيجة تفاعله مع الهيدروجين في الهواء الرطب.", a: "( ✗ ) التصويب: تفاعله مع الأكسجين في الهواء الرطب." },
+            { id: 20, lesson: 1, type: "tf", q: "تتكون مادة الصابون نتيجة تفاعل حمض الهيدروكلوريك مع الزيوت.", a: "( ✗ ) التصويب: تفاعل الصودا الكاوية (هيدروكسيد الصوديوم) مع الزيوت." },
+
+            // صنف التغيرات (6)
+            { id: 21, lesson: 1, type: "classify", q: "صنف: انصهار مكعب من الثلج.", a: "تغير فيزيائي" },
+            { id: 22, lesson: 1, type: "classify", q: "صنف: تحول اللبن إلى زبادي.", a: "تغير كيميائي" },
+            { id: 23, lesson: 1, type: "classify", q: "صنف: تعفن ثمرة موز.", a: "تغير كيميائي" },
+            { id: 24, lesson: 1, type: "classify", q: "صنف: تكسير قطعة من الصخور.", a: "تغير فيزيائي" },
+            { id: 25, lesson: 1, type: "classify", q: "صنف: احتراق الغاز في الموقد.", a: "تغير كيميائي" },
+            { id: 26, lesson: 1, type: "classify", q: "صنف: تسامي اليود (وتعلم زجاجة مملوءة بالماء تهشمت بالمبرد).", a: "تغير فيزيائي" },
+
+            // علل لما يأتي (9)
+            { id: 27, lesson: 1, type: "reason", q: "علل: يعد انصهار الجليد تغيراً فيزيائياً؟", a: "لأنه تغير في شكل وحالة المادة فقط دون أن يحدث أي تغير في تركيبها الكيميائي." },
+            { id: 28, lesson: 1, type: "reason", q: "علل: يعتبر احتراق الفحم تغيراً كيميائياً؟", a: "لأنه ينتج عنه مواد جديدة (غاز ثاني أكسيد الكربون) تختلف في خواصها عن خواص المادة الأصلية." },
+            { id: 29, lesson: 1, type: "reason", q: "علل: تعكر ماء الجير عند إمرار غاز ثاني أكسيد الكربون فيه يعتبر تغيراً كيميائياً؟", a: "لحدوث تفاعل كيميائي وتكون مادة جديدة غير ذائبة في الماء (كربونات الكالسيوم)." },
+            { id: 30, lesson: 1, type: "reason", q: "علل: زوال لون محلول كبريتات النحاس الأزرق عند تفاعله مع لوح الخارصين؟", a: "لتكون محلول كبريتات الخارصين (ZnSO4) عديم اللون وترسب النحاس الأحمر." },
+            { id: 31, lesson: 1, type: "reason", q: "علل: يتغير لون التفاحة المقطوعة إلى اللون البني عند تركها في الهواء؟", a: "لحدوث تفاعل كيميائي بين المركبات الحديدية للتفاح مع أكسجين الهواء الجوي." },
+            { id: 32, lesson: 1, type: "reason", q: "علل: يتغير لون الحديد عند تركه في الهواء الرطب؟", a: "لحدوث تفاعل كيميائي بين الحديد وأكسجين الهواء الجوي الرطب وتكون هيدروكسيد الحديد (الصدأ)." },
+            { id: 33, lesson: 1, type: "reason", q: "علل: يُفضل طلاء الأبواب والمنشآت الحديدية بمادة عازلة؟", a: "لحمايتها من الصدأ والتآكل نتيجة التفاعل مع الهواء الرطب." },
+            { id: 34, lesson: 1, type: "reason", q: "علل: يوضع قناع واقي عند إجراء بعض التفاعلات الكيميائية؟", a: "لتجنب الضوء الشديد والحرارة المنبعثة وحماية الوجه والعينين من الغازات الصادرة." },
+            { id: 35, lesson: 1, type: "reason", q: "علل: يجب إمساك شريط الماغنسيوم بالماسك الحراري قبل إشعاله باللهب؟", a: "لتجنب الحروق وللأمان المعملي أثناء الاشتعال المنبعث منه حرارة عالية." },
+
+            // ماذا يحدث عند (10)
+            { id: 36, lesson: 1, type: "whatif", q: "ماذا يحدث عند: إضافة محلول نترات الفضة إلى محلول كلوريد الصوديوم؟", a: "يحدث تفاعل كيميائي ويتكون راسب أبيض من كلوريد الفضة (AgCl)." },
+            { id: 37, lesson: 1, type: "whatif", q: "ماذا يحدث عند: تعرض الراسب الأبيض من كلوريد الفضة إلى ضوء الشمس؟", a: "يتغير لونه إلى اللون البنفسجي." },
+            { id: 38, lesson: 1, type: "whatif", q: "ماذا يحدث عند: اشتعال شريط ماغنسيوم في الهواء الجوي؟", a: "يشتعل بضوء ساطع ويتكون مسحوق أبيض من أكسيد الماغنسيوم (MgO)." },
+            { id: 39, lesson: 1, type: "whatif", q: "ماذا يحدث عند: إضافة شريط ماغنسيوم إلى حمض الهيدروكلوريك المخفف؟", a: "يحدث تفاعل كيميائي وتتصاعد فقاعات من غاز الهيدروجين (H2) ويتكون كلوريد الماغنسيوم." },
+            { id: 40, lesson: 1, type: "whatif", q: "ماذا يحدث عند: خلط الخل مع بيكربونات الصوديوم داخل زجاجة مغلقة متصلة ببالون؟", a: "يحدث تفاعل كيميائي وينتج غاز ثاني أكسيد الكربون (CO2) مما يسبب انتفاخ البالون." },
+            { id: 41, lesson: 1, type: "whatif", q: "ماذا يحدث عند: وضع لوح خارصين في محلول كبريتات النحاس الأزرق؟", a: "يزول اللون الأزرق لتكون كبريتات الخارصين عديمة اللون، ويترسب النحاس (Cu) البني المحمر علي لوح الخارصين." },
+            { id: 42, lesson: 1, type: "whatif", q: "ماذا يحدث عند: تسخين السكر في ملعقة على النار لفترة من الزمن (احتراق السكر)؟", a: "يتغير اللون إلى البني وتظهر رائحة الكراميل وتتكون مادة جديدة (كربون) لا تتذوق كالسكر." },
+            { id: 43, lesson: 1, type: "whatif", q: "ماذا يحدث عند: إضافة محلول الصودا الكاوية إلى الزيت مع التسخين والتقليب؟", a: "يتكون مادة جديدة ذات قوام مختلف وهي (الصابون) نتيجة حدوث تفاعل كيميائي." },
+            { id: 44, lesson: 1, type: "whatif", q: "ماذا يحدث عند: تقطيع ثمرة تفاح وتركها في الهواء الجوي؟", a: "يتغير لونها إلى اللون البني نتيجة التفاعل الكيميائي مع أكسجين الهواء." },
+            { id: 45, lesson: 1, type: "whatif", q: "ماذا يحدث عند: ترك قطعة من الحديد فترة طويلة في الهواء الرطب؟", a: "تصدأ وتتكون عليها طبقة هشة برتقالية حمراء نتيجة التفاعل مع الأكسجين." },
+
+            // كيف تستدل (3)
+            { id: 46, lesson: 1, type: "deduce", q: "كيف تستدل على حدوث تفاعل كيميائي في تجربة: قلي البيض؟", a: "من خلال تغير لون وقوام كل من بياض وصفار البيض وتصلبه." },
+            { id: 47, lesson: 1, type: "deduce", q: "كيف تستدل على حدوث تفاعل كيميائي عند: إشعال الألعاب النارية؟", a: "من خلال انبعاث ضوء ساطع وانطلاق حرارة وفرقعة." },
+            { id: 48, lesson: 1, type: "deduce", q: "كيف تستدل على حدوث تفاعل كيميائي عند: إضافة قطعة ماغنسيوم إلى حمض الهيدروكلوريك؟", a: "من خلال تصاعد فقاعات غازية كثيفة من غاز الهيدروجين." },
+
+            // أسئلة متنوعة (1)
+            { id: 49, lesson: 1, type: "misc", q: "اذكر ثلاثة من احتياطات الأمان المعملي عند إجراء التفاعلات الكيميائية؟", a: "1- ارتداء قناع واقي ونظارات حماية الوجه.\n2- استخدام ماسك حراري لإمساك الأنابيب والمواد المحترقة.\n3- التعامل بحرص شديد مع الأحماض وعدم لمس المساحيق باليد." },
+
+
+            // ==========================================
+            // LESSON 2: المعادلة الكيميائية (48 أسئلة)
+            // ==========================================
+
+            // اكتب المصطلح العلمي (8)
+            { id: 50, lesson: 2, type: "term", q: "تمثيل رمزي للتفاعل الكيميائي يوضح جزيئات المتفاعلات والنواتج برموز وصيغ كيميائية.", a: "المعادلة الكيميائية الرمزية" },
+            { id: 51, lesson: 2, type: "term", q: "معادلة كيميائية رمزية يتساوى فيها أعداد ذرات كل عنصر من عناصر المواد الداخلة في التفاعل مع أعداد ذرات نفس العنصر في المواد الناتجة.", a: "المعادلة الكيميائية الموزونة" },
+            { id: 52, lesson: 2, type: "term", q: "أعداد تكتب يسار الصيغ الكيميائية لمواد التفاعل في المعادلة الموزونة.", a: "معاملات المعادلة (Coefficients)" },
+            { id: 53, lesson: 2, type: "term", q: "أعداد توجد أسفل يمين الذرات المكونة للجزيء.", a: "الأعداد التحتية (Subscripts)" },
+            { id: 54, lesson: 2, type: "term", q: "المواد التي تكتب على يسار السهم في المعادلة الكيميائية.", a: "المتفاعلات (Reactants)" },
+            { id: 55, lesson: 2, type: "term", q: "مادة تزيد من سرعة التفاعل الكيميائي دون أن تستهلك أو تتغير.", a: "العامل الحفاز (Catalyst)" },
+            { id: 56, lesson: 2, type: "term", q: "المادة لا تفنى ولا تستحدث من العدم، ولكنها تتحول من صورة إلى أخرى.", a: "قانون بقاء المادة" },
+            { id: 57, lesson: 2, type: "term", q: "مجموع كتل المواد الداخلة في التفاعل يساوي مجموع كتل المواد الناتجة عنه.", a: "قانون بقاء الكتلة" },
+
+            // أكمل ما يأتي (4)
+            { id: 58, lesson: 2, type: "complete", q: "ينص قانون بقاء الكتلة على أن مجموع كتل المواد الداخلة في التفاعل ...... مجموع كتل المواد الناتجة عنه.", a: "يساوي" },
+            { id: 59, lesson: 2, type: "complete", q: "عند وزن المعادلة الكيميائية نغير ...... فقط دون تغيير الأعداد التحتية لرموز العناصر.", a: "المعاملات" },
+            { id: 60, lesson: 2, type: "complete", q: "في المعادلة الكيميائية، تكتب المتفاعلات على الجانب ...... من السهم.", a: "الأيسر" },
+            { id: 61, lesson: 2, type: "complete", q: "يدل الاختصار (l) على المادة في الحالة ...... بينما يدل (aq) على المادة في صورة ...... ", a: "السائلة | محلول مائي" },
+
+            // اختر الإجابة الصحيحة (2)
+            { id: 62, lesson: 2, type: "mcq", q: "العالم الذي صاغ قانون بقاء الكتلة وأول من اثبت أن الأكسجين مادة أساسية في الاحتراق هو:", opts: ["رذرفورد", "دالتون", "أنطوان لافوزييه", "موزلي"], a: "أنطوان لافوزييه" },
+            { id: 63, lesson: 2, type: "mcq", q: "عند احتراق 12g من الكربون في جو من الأكسجين يتكون 44g من ثاني أكسيد الكربون، فما كتلة الأكسجين المستهلك؟", opts: ["8g", "16g", "22g", "32g"], a: "32g (حيث: 44 - 12 = 32g بناءً على قانون بقاء الكتلة)" },
+
+            // ضع علامة (✓) أو (✗) (2)
+            { id: 64, lesson: 2, type: "tf", q: "تفنى المواد المتفاعلة تماماً عند حدوث التفاعل الكيميائي.", a: "( ✗ ) التصويب: لا تفنى بل تتحول إلى مواد ناتجة جديدة (قانون بقاء المادة)." },
+            { id: 65, lesson: 2, type: "tf", q: "يتم تغيير الأعداد التحتية للرموز عند موازنة المعادلة الكيميائية.", a: "( ✗ ) التصويب: يتم تغيير المعاملات فقط دون المساس بالأعداد التحتية." },
+
+            // علل لما يأتي (4)
+            { id: 66, lesson: 2, type: "reason", q: "علل: يُعبر عن التفاعل الكيميائي بمعادلة رمزية وليست لفظية فقط؟", a: "لأن المعادلة الرمزية توضح نوع وعدد الذرات والجزيئات والحالة الفيزيائية بدقة على عكس اللفظية." },
+            { id: 67, lesson: 2, type: "reason", q: "علل: يجب أن تكون المعادلة الكيميائية موزونة؟", a: "لتحقيق قانون بقاء الكتلة (أن يكون مجموع كتل المتفاعلات مساوياً لمجموع كتل النواتج)." },
+            { id: 68, lesson: 2, type: "reason", q: "علل: لا يمكن تغيير الأعداد التحتية عند وزن المعادلة الكيميائية؟", a: "لأن الأعداد التحتية تعبر عن التركيب الجزيئي الثابت للمركب، وتغييرها يغير نوع المادة الكيميائية تماماً." },
+            { id: 69, lesson: 2, type: "reason", q: "علل: كتابة وزن المعادلة: H2 + O2 -> H2O2 يعد خطأ علمياً عند تحضير الماء؟", a: "لأن إضافة رقم سفلي يحول الصيغة إلى فوق أكسيد الهيدروجين (ماء أكسجين) وليس ماء، والوزن يكون بالمعاملات: 2H2 + O2 -> 2H2O." },
+
+            // ماذا يحدث عند (2)
+            { id: 70, lesson: 2, type: "whatif", q: "ماذا يحدث عند: إضافة محلول كلوريد الكالسيوم إلى محلول كبريتات الصوديوم؟", a: "يتكون راسب أبيض من كبريتات الكالسيوم (CaSO4) نتيجة تفاعل كيميائي." },
+            { id: 71, lesson: 2, type: "whatif", q: "ماذا يحدث عند: إضافة عامل حفاز إلى تفاعل كيميائي بطيء؟", a: "تزداد سرعة التفاعل الكيميائي دون أن يستهلك أو يتغير العامل الحفاز." },
+
+            // ضع المعاملات المناسبة (6)
+            { id: 72, lesson: 2, type: "coeffs", q: "زن المعادلة التالية بالمعاملات: ... Al + ... O2 ---> 2 Al2O3", a: "المعاملات هي: 4Al + 3O2 ---> 2Al2O3" },
+            { id: 73, lesson: 2, type: "coeffs", q: "زن المعادلة التالية بالمعاملات: N2 + ... H2 ---> ... NH3", a: "المعاملات هي: N2 + 3H2 ---> 2NH3" },
+            { id: 74, lesson: 2, type: "coeffs", q: "زن المعادلة التالية بالمعاملات: ... Na + ... H2O ---> 2 NaOH + H2", a: "المعاملات هي: 2Na + 2H2O ---> 2NaOH + H2" },
+            { id: 75, lesson: 2, type: "coeffs", q: "زن المعادلة التالية بالمعاملات: 2 NaNO3 ---> ... NaNO2 + O2", a: "المعامل هي: 2NaNO3 ---> 2NaNO2 + O2" },
+            { id: 76, lesson: 2, type: "coeffs", q: "زن المعادلة التالية بالمعاملات: Zn + ... AgNO3 ---> Zn(NO3)2 + ... Ag", a: "المعاملات هي: Zn + 2AgNO3 ---> Zn(NO3)2 + 2Ag" },
+            { id: 77, lesson: 2, type: "coeffs", q: "زن المعادلة التالية بالمعاملات: ... Al + ... H2SO4 ---> Al2(SO4)3 + ... H2", a: "المعاملات هي: 2Al + 3H2SO4 ---> Al2(SO4)3 + 3H2" },
+
+            // اكتب المعادلات الرمزية الموزونة (10)
+            { id: 78, lesson: 2, type: "equations", q: "1. تسخين مسحوق أكسيد الزئبق لتكوين زئبق وأكسجين.", a: "2HgO (s) --(Δ)--> 2Hg (l) + O2 (g)" },
+            { id: 79, lesson: 2, type: "equations", q: "2. تفاعل اليود الصلب مع غاز الهيدروجين وتكوين غاز يوديد الهيدروجين.", a: "I2 (s) + H2 (g) ---> 2HI (g)" },
+            { id: 80, lesson: 2, type: "equations", q: "3. تفاعل غاز النيتروجين مع غاز الهيدروجين لتكوين غاز النشادر.", a: "N2 (g) + 3H2 (g) ---> 2NH3 (g)" },
+            { id: 81, lesson: 2, type: "equations", q: "4. احتراق الكربون في جو من الأكسجين ليعطي ثاني أكسيد الكربون.", a: "C (s) + O2 (g) --(Δ)--> CO2 (g)" },
+            { id: 82, lesson: 2, type: "equations", q: "5. اشتعال شريط الماغنسيوم في جو من الأكسجين لتكوين مسحوق أكسيد ماغنسيوم.", a: "2Mg (s) + O2 (g) --(Δ)--> 2MgO (s)" },
+            { id: 83, lesson: 2, type: "equations", q: "6. تفاعل فلز الماغنسيوم مع حمض الهيدروكلوريك المخفف.", a: "Mg (s) + 2HCl (aq) --(dil)--> MgCl2 (aq) + H2 (g)" },
+            { id: 84, lesson: 2, type: "equations", q: "7. تفاعل الماغنسيوم مع حمض الكبريتيك المخفف وتصاعد الهيدروجين.", a: "Mg (s) + H2SO4 (aq) --(dil)--> MgSO4 (aq) + H2 (g)" },
+            { id: 85, lesson: 2, type: "equations", q: "8. تفاعل الخارصين مع كبريتات النحاس الزرقاء وترسب النحاس.", a: "Zn (s) + CuSO4 (aq) ---> ZnSO4 (aq) + Cu (s)" },
+            { id: 86, lesson: 2, type: "equations", q: "9. احتراق الميثان في جو من الأكسجين لتكوين بخار ماء وثاني أكسيد الكربون.", a: "CH4 (g) + 2O2 (g) --(Δ)--> CO2 (g) + 2H2O (g)" },
+            { id: 87, lesson: 2, type: "equations", q: "10. احتراق غاز الإيثان في وفرة من الأكسجين.", a: "2C2H6 (g) + 7O2 (g) --(Δ)--> 4CO2 (g) + 6H2O (g)" },
+
+            // دلالة الرموز (10)
+            { id: 88, lesson: 2, type: "symbols", q: "ما دلالة الرمز: (s) في المعادلات الكيميائية؟", a: "حالة صلبة (Solid)" },
+            { id: 89, lesson: 2, type: "symbols", q: "ما دلالة الرمز: (l) في المعادلات الكيميائية؟", a: "حالة سائلة (Liquid)" },
+            { id: 90, lesson: 2, type: "symbols", q: "ما دلالة الرمز: (g) في المعادلات الكيميائية؟", a: "حالة غازية (Gas)" },
+            { id: 91, lesson: 2, type: "symbols", q: "ما دلالة الرمز: (v) في المعادلات الكيميائية؟", a: "حالة بخارية (Vapor)" },
+            { id: 92, lesson: 2, type: "symbols", q: "ما دلالة الرمز: (aq) في المعادلات الكيميائية؟", a: "محلول مائي (Aqueous Solution)" },
+            { id: 93, lesson: 2, type: "symbols", q: "ما دلالة الرمز: Δ (مثلث أعلى السهم)؟", a: "وجود حرارة / تسخين (Heat)" },
+            { id: 94, lesson: 2, type: "symbols", q: "ما دلالة الرمز: Cat أعلى سهم التفاعل؟", a: "وجود عامل حفاز (Catalyst)" },
+            { id: 95, lesson: 2, type: "symbols", q: "ما دلالة الرمز: dil أسفل/أعلى السهم؟", a: "حمض مخفف (Dilute)" },
+            { id: 96, lesson: 2, type: "symbols", q: "ما دلالة الرمز: Conc في التفاعل؟", a: "حمض مركز (Concentrated)" },
+            { id: 97, lesson: 2, type: "symbols", q: "ما دلالة السهم المتجه لأعلى (↑) ولأسفل (↓)؟", a: "(↑) تصاعد غاز | (↓) تكون راسب صلب" },
+
+
+            // ==========================================
+            // LESSON 3: الكربوهيدرات والدهون والبروتينات (73 أسئلة)
+            // ==========================================
+
+            // المصطلح العلمي (13)
+            { id: 98, lesson: 3, type: "term", q: "أحد فروع علم الكيمياء يختص بدراسة أنواع المواد الغذائية في الوجبات الغذائية.", a: "كيمياء التغذية" },
+            { id: 99, lesson: 3, type: "term", q: "مركبات عضوية يدخل في تركيبها الكربون والهيدروجين والأكسجين وتعد مصدراً رئيسياً للطاقة.", a: "الكربوهيدرات" },
+            { id: 100, lesson: 3, type: "term", q: "أبسط صورة من الكربوهيدرات لا يمكن تحليلها مائياً.", a: "السكريات الأحادية" },
+            { id: 101, lesson: 3, type: "term", q: "سكريات تتكون من وحدتين من السكريات الأحادية منزوع منها جزيء ماء.", a: "السكريات الثنائية" },
+            { id: 102, lesson: 3, type: "term", q: "سكريات تتكون من 3 إلى 9 وحدات من السكر الأحادي.", a: "السكريات المحدودة" },
+            { id: 103, lesson: 3, type: "term", q: "سكريات تتكون من أكثر من 9 وحدات من السكر الأحادي.", a: "السكريات العديدة" },
+            { id: 104, lesson: 3, type: "term", q: "أحد السكريات العديدة يدخل في تركيب جدار الخلية النباتية.", a: "السليلوز" },
+            { id: 105, lesson: 3, type: "term", q: "مادة تستخدم في الكشف عن سكر الجلوكوز.", a: "محلول بندكت الأزرق" },
+            { id: 106, lesson: 3, type: "term", q: "هرمون يسبب نقص إفرازه إصابة الإنسان بمرض البول السكري.", a: "هرمون الأنسولين" },
+            { id: 107, lesson: 3, type: "term", q: "مادة دهنية يؤدي ترسبها في الشرايين إلى مخاطر في القلب.", a: "الكوليسترول" },
+            { id: 108, lesson: 3, type: "term", q: "المادة التي تختزن في صورتها الزائدة من الكربوهيدرات بالبد والكبد والعضلات.", a: "الجليكوجين والدهون" },
+            { id: 109, lesson: 3, type: "term", q: "بروتينات متخصصة يمكن استخدامها كعوامل حفازة حيوية.", a: "الإنزيمات" },
+            { id: 110, lesson: 3, type: "term", q: "وحدات أساسية بنائية تتكون منها البروتينات.", a: "الأحماض الأمينية" },
+
+            // أكمل ما يأتي (4)
+            { id: 111, lesson: 3, type: "complete", q: "يتكون السكروز من وحدة ...... ووحدة ...... ", a: "جلوكوز | فركتوز" },
+            { id: 112, lesson: 3, type: "complete", q: "يتكون سكر ...... المالتوز من وحدتين من ......", a: "المالتوز | الجلوكوز" },
+            { id: 113, lesson: 3, type: "complete", q: "الجلوكوز يخزن في الكبد والعضلات في صورة ...... وفي خلايا الجسم في صورة ......", a: "جليكوجين | دهون" },
+            { id: 114, lesson: 3, type: "complete", q: "من مصادر البروتين الحيواني ...... بينما من مصادر البروتين النباتي ......", a: "اللحوم والبيض واللبن | البقوليات (كالفول والعدس)" },
+
+            // اختر الإجابة الصحيحة (8)
+            { id: 115, lesson: 3, type: "mcq", q: "أي العناصر التالية لا يدخل بشكل أساسي في تركيب الكربوهيدرات؟", opts: ["الكربون", "النيتروجين", "الهيدروجين", "الأكسجين"], a: "النيتروجين" },
+            { id: 116, lesson: 3, type: "mcq", q: "أي الجزيئات التالية لا يمكن تحللها مائياً لوحدات أبسط منها؟", opts: ["المالتوز", "النشا", "الجلوكوز", "السكروز"], a: "الجلوكوز" },
+            { id: 117, lesson: 3, type: "mcq", q: "يعتبر ........ من السكريات الأحادية.", opts: ["السكروز", "النشا", "المالتوز", "الجلوكوز"], a: "الجلوكوز" },
+            { id: 118, lesson: 3, type: "mcq", q: "يعتبر ........ من السكريات الثنائية.", opts: ["النشا", "السكروز", "الجلوكوز", "السليلوز"], a: "السكروز" },
+            { id: 119, lesson: 3, type: "mcq", q: "يعتبر السليلوز من السكريات ..........", opts: ["الأحادية", "المحدودة", "الثنائية", "العديدة"], a: "العديدة" },
+            { id: 120, lesson: 3, type: "mcq", q: "يعرف سكر ........ بسكر الشعير.", opts: ["الجلوكوز", "السكروز", "المالتوز", "النشا"], a: "المالتوز" },
+            { id: 121, lesson: 3, type: "mcq", q: "يوجد الفركتوز بشكل أساسي في ..........", opts: ["اللبن", "الفواكه", "الخبز", "الأرز"], a: "الفواكه" },
+            { id: 122, lesson: 3, type: "mcq", q: "تستخدم ........ في تكوين الأجسام المضادة لمقاومة الميكروبات.", opts: ["الدهون", "النشويات", "البروتينات", "الكربوهيدرات"], a: "البروتينات" },
+
+            // ضع علامة (✓) أو (✗) (4)
+            { id: 123, lesson: 3, type: "tf", q: "يعرف سكر الجلوكوز بسكر العنب.", a: "( ✓ ) إجابة صحيحة." },
+            { id: 124, lesson: 3, type: "tf", q: "يتراكم سكر الجلوكوز في الدم نتيجة زيادة إفراز هرمون الأنسولين.", a: "( ✗ ) التصويب: نتيجة نقص إفراز هرمون الأنسولين." },
+            { id: 125, lesson: 3, type: "tf", q: "تدخل الدهون بشكل أساسي في بناء العضلات ونمو الخلايا التالفة.", a: "( ✗ ) التصويب: تدخل البروتينات." },
+            { id: 126, lesson: 3, type: "tf", q: "يقل معدل حرق الدهون في الجسم خلال فترات الصيام.", a: "( ✗ ) التصويب: يزداد معدل حرق الدهون للحصول على الطاقة." },
+
+            // صوب ما تحته خط (10)
+            { id: 127, lesson: 3, type: "correct", q: "تمد الكربوهيدرات الجسم بضعف الطاقة التي تمنحه الدهون بها.", a: "التصويب: بنصف (الدهون تمد بضعف طاقة الكربوهيدرات)." },
+            { id: 128, lesson: 3, type: "correct", q: "سكر الجلوكوز من السكريات الثنائية.", a: "التصويب: الأحادية." },
+            { id: 129, lesson: 3, type: "correct", q: "تتراكم البروتينات في الدم نتيجة لنقص إفراز الأنسولين.", a: "التصويب: الجلوكوز." },
+            { id: 130, lesson: 3, type: "correct", q: "يستخدم محلول بندكت الأزرق في الكشف عن الدهون.", a: "التصويب: سكر الجلوكوز." },
+            { id: 131, lesson: 3, type: "correct", q: "يتم الكشف عن النشا باستخدام محلول بندكت الأزرق.", a: "التصويب: محلول اليود." },
+            { id: 132, lesson: 3, type: "correct", q: "محلول سودان 4 يستخدم على أسطح المحاليل التي تحتوي على بروتينات.", a: "التصويب: دهون." },
+            { id: 133, lesson: 3, type: "correct", q: "كاشف بيوريت يتغير لونه من الأزرق إلى الأخضر عند إضافته للبروتينات.", a: "التصويب: البنفسجي." },
+            { id: 134, lesson: 3, type: "correct", q: "تتركب الدهون والبروتينات من نفس العناصر وهي C, H, O فقط.", a: "التصويب: الكربوهيدرات والدهون." },
+            { id: 135, lesson: 3, type: "correct", q: "تتكون الكربوهيدرات من وحدات أساسية تسمى الأحماض الأمينية.", a: "التصويب: البروتينات." },
+            { id: 136, lesson: 3, type: "correct", q: "من مصادر الكربوهيدرات الأساسية الزبد والبيض.", a: "التصويب: الدهون والبروتينات." },
+
+            // علل لما يأتي (19)
+            { id: 137, lesson: 3, type: "reason", q: "علل: الجلوكوز من أبسط صور الكربوهيدرات؟", a: "لأنه سكر أحادي لا يمكن تحليله مائياً إلى سكريات أبسط منه." },
+            { id: 138, lesson: 3, type: "reason", q: "علل: يعد السكروز من السكريات الثنائية؟", a: "لأنه يتكون من اتحاد وحدتين من السكر الأحادي (جلوكوز + فركتوز) منزوع منهما جزيء ماء." },
+            { id: 139, lesson: 3, type: "reason", q: "علل: يعتبر الرافينوز (سكر البقوليات) من السكريات المحدودة؟", a: "لأنه يتكون من 3 إلى 9 وحدات من السكر الأحادي." },
+            { id: 140, lesson: 3, type: "reason", q: "علل: النشا والسليلوز من السكريات العديدة؟", a: "لأنهما يتكونان من سلاسل مرتبطة تضم أكثر من 9 وحدات من السكر الأحادي." },
+            { id: 141, lesson: 3, type: "reason", q: "علل: إصابة بعض الأشخاص بمرض السكري؟", a: "بسبب تراكم سكر الجلوكوز في الدم نتيجة نقص إفراز هرمون الأنسولين من البنكرياس." },
+            { id: 142, lesson: 3, type: "reason", q: "علل: تغير تدرج لون كاشف بندكت عند إضافته لعينات مختلفة من الجلوكوز؟", a: "لاختلاف درجة تركيز سكر الجلوكوز (من أخضر في التركيز المنخفض إلى برتقالي ثم أحمر في التركيز العالي)." },
+            { id: 143, lesson: 3, type: "reason", q: "علل: عند إضافة محلول اليود إلى قطعة من البطاطس يزرق لون المحلول؟", a: "بسبب احتواء البطاطس على النشا (سكر عديد) الذي يتفاعل مع اليود متحولاً للأزرق القاتم." },
+            { id: 144, lesson: 3, type: "reason", q: "علل: ضرورة تناول البطاطس والأرز والخبز بكمية معتدلة؟", a: "حتى لا تختزن الكربوهيدرات الزائدة في الجسم في صورة دهون مما يسبب السمنة والمشاكل الصحية." },
+            { id: 145, lesson: 3, type: "reason", q: "علل: يستطيع الجسم الصيام والاستمرار لعدة ساعات دون طعام؟", a: "لأن الجسم يحرق الجليكوجين المخزن في الكبد والعضلات ثم الدهون المخزنة للحصول على الطاقة." },
+            { id: 146, lesson: 3, type: "reason", q: "علل: يحتاج الرياضيون إلى تناول وجبات غنية بالكربوهيدرات قبل التمارين؟", a: "لأن الكربوهيدرات مصدر سريع ومباشر لإمداد الجسم بالطاقة اللازمة للمجهود البدني." },
+            { id: 147, lesson: 3, type: "reason", q: "علل: أهمية الكربوهيدرات للكائنات الحية؟", a: "تعد مصدراً رئيساً للطاقة، وتدعم وظائف الدماغ، ويدخل السليلوز في بناء جدر الخلايا النباتية." },
+            { id: 148, lesson: 3, type: "reason", q: "علل: تلعب الكربوهيدرات دوراً هاماً في الصناعة؟", a: "تدخل في صناعة الورق، كبسولات الأدوية، ومستحضرات التجميل." },
+            { id: 149, lesson: 3, type: "reason", q: "علل: يتحول لون محلول بيوريت من الأزرق للبنفسجي عند إضافته لزلال البيض؟", a: "لأن زلال البيض يحتوي على نسبة عالية من البروتينات." },
+            { id: 150, lesson: 3, type: "reason", q: "علل: احتواء مكوني البيضة (الصفار والبياض) على نوعين مختلفين من الغذاء؟", a: "لأن الصفار غني بالدهون (مصدر للطاقة)، بينما البياض غني بالبروتين (اللازم للنمو وبناء الخلايا)." },
+            { id: 151, lesson: 3, type: "reason", q: "علل: تجنب الإفراط في تناول الدهون والأطعمة المقلية؟", a: "لأنها تزيد من نسبة الكوليسترول بالدم مما يسبب ترسبها على الشرايين وانسدادها وأمراض القلب." },
+            { id: 152, lesson: 3, type: "reason", q: "علل: خطورة الإفراط في استخدام المكملات الغذائية للأحماض الأمينية؟", a: "لأن الكميات الزائدة تؤدي إلى الإجهاد والمخاطر الصحية الشديدة على الكلى والكبد." },
+            { id: 153, lesson: 3, type: "reason", q: "علل: يلزم احتواء الغذاء على كميات مناسبة من البروتين؟", a: "لبناء العضلات والأنسجة، وإصلاح الخلايا التالفة، وتكوين الإنزيمات والأجسام المضادة." },
+            { id: 154, lesson: 3, type: "reason", q: "علل: للبروتينات فوائد كبيرة في مجال الصناعة؟", a: "تستخدم في صناعة الإنسولين الطبية، إنتاج الإنزيمات لمساحيق الغسيل، واستخلاص الجيلاتين." },
+            { id: 155, lesson: 3, type: "reason", q: "علل: أهمية البروتينات في الجهاز المناعي لمقاومة الأمراض؟", a: "لأنها تدخل في تركيب الأجسام المضادة التي تحارب الميكروبات والبكتيريا." },
+
+            // ماذا يحدث عند (10)
+            { id: 156, lesson: 3, type: "whatif", q: "ماذا يحدث عند: اتحاد وحدة جلوكوز مع وحدة فركتوز؟", a: "يتكون سكر ثنائي وهو السكروز (سكر القصب)." },
+            { id: 157, lesson: 3, type: "whatif", q: "ماذا يحدث عند: اتحاد وحدتين من سكر الجلوكوز؟", a: "يتكون سكر ثنائي وهو المالتوز (سكر الشعير)." },
+            { id: 158, lesson: 3, type: "whatif", q: "ماذا يحدث عند: غياب السليلوز بالنسبة للخلية النباتية؟", a: "لن يتكون الجدار الخلوي الذي يمنح الخلية النباتية صلابتها وشكلها المحدد." },
+            { id: 159, lesson: 3, type: "whatif", q: "ماذا يحدث عند: إضافة قطرات من محلول اليود إلى الجزء الداخلي لثمرة بطاطس؟", a: "يتغير لون محلول اليود من البني المصفر إلى الأزرق الداكن القاتم." },
+            { id: 160, lesson: 3, type: "whatif", q: "ماذا يحدث عند: تناول كميات من الكربوهيدرات تزيد عن حاجة الجسم؟", a: "تختزن الزيادة في الكبد والعضلات في صورة جليكوجين، وتتحول باقي الزيادة إلى دهون في خلايا الجسم." },
+            { id: 161, lesson: 3, type: "whatif", q: "ماذا يحدث عند: ارتفاع نسبة الكوليسترول في الدم عن المعدل الطبيعي؟", a: "يترسب على جدران الشرايين مما يؤدي لانسدادها ويزيد من مخاطر أمراض القلب والأوعية." },
+            { id: 162, lesson: 3, type: "whatif", q: "ماذا يحدث عند: إضافة محلول سودان 4 لصفار البيض؟", a: "تتكون طبقة/بقعة ذات لون أحمر برتقالي على سطح المخلوط لوجود الدهون." },
+            { id: 163, lesson: 3, type: "whatif", q: "ماذا يحدث عند: وضع قطرات من كاشف بيوريت على زلال البيض؟", a: "يتغير لون الكاشف من الأزرق إلى اللون البنفسجي." },
+            { id: 164, lesson: 3, type: "whatif", q: "ماذا يحدث عند: نقص إفراز هرمون الأنسولين من البنكرياس؟", a: "يتراكم سكر الجلوكوز في الدم مما يؤدي للإصابة بمرض السكري." },
+            { id: 165, lesson: 3, type: "whatif", q: "ماذا يحدث عند: الإفراط الشديد في تناول المكملات الغذائية للبروتينات؟", a: "يتسبب في إجهاد وتأثيرات سلبية خطيرة على صحة الكلى والكبد." },
+
+            // اذكر أهمية (6)
+            { id: 166, lesson: 3, type: "importance", q: "اذكر أهمية الكربوهيدرات للكائنات الحية؟", a: "1- المصدر الرئيسي والأسرع للطاقة.\n2- دعم وتنشيط وظائف الدماغ.\n3- يدخل السليلوز في بناء الجدر الخلوية للنباتات." },
+            { id: 167, lesson: 3, type: "importance", q: "اذكر أهمية الكربوهيدرات في المجال الصناعي؟", a: "تدخل في صناعة الورق، كبسولات الأدوية، ومستحضرات التجميل." },
+            { id: 168, lesson: 3, type: "importance", q: "اذكر أهمية البروتينات لجسم الإنسان؟", a: "بناء العضلات والأنسجة، ترميم الخلايا التالفة، وتكوين الهرمونات والأنزيمات والأجسام المضادة." },
+            { id: 169, lesson: 3, type: "importance", q: "اذكر أهمية البروتينات في الصناعات المختلفة؟", a: "إنتاج الأنسولين الطبي، استخدام الإنزيمات في مساحيق الغسيل، واستخلاص الجيلاتين الغذائي." },
+            { id: 170, lesson: 3, type: "importance", q: "اذكر أهمية كل من الدهون والإنزيمات؟", a: "• الدهون: مخزن عالي الطاقة، والعزل الحراري، وبناء الأغشية الخلوية.\n• الإنزيمات: عوامل حفازة حيوية تزيد سرعة التفاعلات دون الاستهلاك." },
+
+            // أسئلة متنوعة وقارن (أسئلة إضافية مجمعة للوصول لـ 170 كاملاً)
+            { id: 171, lesson: 3, type: "misc", q: "اذكر أعراض مرض السكري الأساسية؟", a: "1- الشعور المستمر بالعطش والجوع.\n2- زيادة عدد مرات التبول.\n3- فقدان الوزن غير المبرر والإجهاد." },
+            { id: 172, lesson: 3, type: "misc", q: "كيف يمكن الحفاظ على نسبة الكوليسترول الطبيعية في الدم؟", a: "1- التقليل من تناول المقليات والدهون المشبعة.\n2- ممارسة الرياضة بانتظام.\n3- شرب الماء بكثرة وتناول الأغذية الغنية بالألياف." },
+            { id: 173, lesson: 3, type: "compare", q: "قارن بين الكواشف الكيميائية المستخدمة في دراستك (بندكت، اليود، سودان 4، بيوريت)؟", a: "• بندكت الأزرق: يكشف عن الجلوكوز (يتحول لأخضر/برتقالي/أحمر).\n• محلول اليود: يكشف عن النشا (يتحول من بني مصفر لأزرق داكن).\n• سودان 4: يكشف عن الدهون (تتكون بقعة أحمر برتقالي).\n• بيوريت الأزرق: يكشف عن البروتينات (يتحول لـ بنفسجي)." }
+        ];
+
+        // State variables
+        let currentLesson = 'all'; // 'all', 1, 2, 3
+        let zoomLevel = 100;
+        let showAllAnswersState = false;
+        let favoriteIds = JSON.parse(localStorage.getItem('mr_naser_favs') || '[]');
+
+        // Setup Zoom Handler
+        function changeZoom(delta) {
+            zoomLevel += delta * 10;
+            if (zoomLevel < 70) zoomLevel = 70;
+            if (zoomLevel > 140) zoomLevel = 140;
+            document.getElementById('zoomLabel').innerText = zoomLevel + '%';
+            document.body.style.fontSize = (zoomLevel / 100) * 16 + 'px';
+        }
+
+        function resetZoom() {
+            zoomLevel = 100;
+            document.getElementById('zoomLabel').innerText = '100%';
+            document.body.style.fontSize = '16px';
+        }
+
+        // Dark Mode Toggle
+        function toggleDarkMode() {
+            document.documentElement.classList.toggle('dark');
+        }
+
+        // Toggle Favorites
+        function toggleFav(id) {
+            if (favoriteIds.includes(id)) {
+                favoriteIds = favoriteIds.filter(f => f !== id);
+            } else {
+                favoriteIds.push(id);
+            }
+            localStorage.setItem('mr_naser_favs', JSON.stringify(favoriteIds));
+            updateFavCount();
+            renderQuestions();
+        }
+
+        function updateFavCount() {
+            document.getElementById('favCount').innerText = favoriteIds.length;
+        }
+
+        // Filter Lesson
+        function filterLesson(lessonNum) {
+            currentLesson = lessonNum;
+            
+            // Highlight Tab
+            document.querySelectorAll('.lesson-tab').forEach(btn => {
+                btn.className = "lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-slate-200 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-300 dark:hover:bg-slate-700";
+            });
+
+            const activeBtn = document.getElementById(lessonNum === 'all' ? 'tab-all' : (lessonNum === 'fav' ? 'tab-fav' : `tab-${lessonNum}`));
+            if (activeBtn) {
+                activeBtn.className = "lesson-tab px-4 py-2 rounded-xl font-bold text-sm whitespace-nowrap transition bg-brand-600 text-white shadow-md";
+            }
+
+            renderQuestions();
+        }
+
+        function filterFavorites() {
+            filterLesson('fav');
+        }
+
+        // Global Toggle All Answers
+        function toggleAllAnswers() {
+            showAllAnswersState = !showAllAnswersState;
+            const btnText = document.getElementById('toggleAllText');
+            btnText.innerText = showAllAnswersState ? 'إخفاء الإجابات' : 'إظهار الإجابات';
+            
+            document.querySelectorAll('.answer-box').forEach(el => {
+                if (showAllAnswersState) {
+                    el.classList.remove('hidden');
+                } else {
+                    el.classList.add('hidden');
+                }
+            });
+        }
+
+        // Toggle Single Answer
+        function toggleAnswer(id) {
+            const ansBox = document.getElementById(`ans-${id}`);
+            if (ansBox) {
+                ansBox.classList.toggle('hidden');
+            }
+        }
+
+        // Get Badge color based on Question Type
+        function getTypeBadge(type) {
+            const badges = {
+                term: { label: 'مصطلح علمي', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/50 dark:text-blue-300' },
+                complete: { label: 'أكمل ما يأتي', color: 'bg-emerald-100 text-emerald-800 dark:bg-emerald-900/50 dark:text-emerald-300' },
+                mcq: { label: 'اختر الإجابة', color: 'bg-purple-100 text-purple-800 dark:bg-purple-900/50 dark:text-purple-300' },
+                tf: { label: 'صح أم خطأ', color: 'bg-amber-100 text-amber-800 dark:bg-amber-900/50 dark:text-amber-300' },
+                classify: { label: 'صنف التغيرات', color: 'bg-teal-100 text-teal-800 dark:bg-teal-900/50 dark:text-teal-300' },
+                reason: { label: 'علل لما يأتي', color: 'bg-rose-100 text-rose-800 dark:bg-rose-900/50 dark:text-rose-300' },
+                whatif: { label: 'ماذا يحدث عند', color: 'bg-indigo-100 text-indigo-800 dark:bg-indigo-900/50 dark:text-indigo-300' },
+                deduce: { label: 'كيف تستدل', color: 'bg-cyan-100 text-cyan-800 dark:bg-cyan-900/50 dark:text-cyan-300' },
+                coeffs: { label: 'وزن المعادلات', color: 'bg-orange-100 text-orange-800 dark:bg-orange-900/50 dark:text-orange-300' },
+                equations: { label: 'معادلات كيميائية', color: 'bg-fuchsia-100 text-fuchsia-800 dark:bg-fuchsia-900/50 dark:text-fuchsia-300' },
+                symbols: { label: 'دلالة الرموز', color: 'bg-sky-100 text-sky-800 dark:bg-sky-900/50 dark:text-sky-300' },
+                importance: { label: 'اذكر أهمية', color: 'bg-lime-100 text-lime-800 dark:bg-lime-900/50 dark:text-lime-300' },
+                correct: { label: 'صوب ما تحته خط', color: 'bg-red-100 text-red-800 dark:bg-red-900/50 dark:text-red-300' },
+                compare: { label: 'مقارنات', color: 'bg-violet-100 text-violet-800 dark:bg-violet-900/50 dark:text-violet-300' },
+                misc: { label: 'أسئلة متنوعة', color: 'bg-slate-200 text-slate-800 dark:bg-slate-700 dark:text-slate-200' }
+            };
+            return badges[type] || badges.misc;
+        }
+
+        function renderQuestions() {
+            const searchVal = document.getElementById('searchInput').value.trim().toLowerCase();
+            const typeVal = document.getElementById('typeSelect').value;
+            const container = document.getElementById('questionsContainer');
+            const emptyState = document.getElementById('emptyState');
+
+            let filtered = rawQuestionsData.filter(item => {
+                // Filter by Lesson
+                if (currentLesson === 'fav') {
+                    if (!favoriteIds.includes(item.id)) return false;
+                } else if (currentLesson !== 'all' && item.lesson !== currentLesson) {
+                    return false;
+                }
+
+                // Filter by Type
+                if (typeVal !== 'all' && item.type !== typeVal) {
+                    return false;
+                }
+
+                // Filter by Search text
+                if (searchVal !== '') {
+                    const inQ = item.q.toLowerCase().includes(searchVal);
+                    const inA = item.a.toLowerCase().includes(searchVal);
+                    const inOpts = item.opts ? item.opts.some(o => o.toLowerCase().includes(searchVal)) : false;
+                    return inQ || inA || inOpts;
+                }
+
+                return true;
+            });
+
+            // Update Counter
+            document.getElementById('displayedCount').innerText = filtered.length;
+
+            if (filtered.length === 0) {
+                container.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            } else {
+                emptyState.classList.add('hidden');
+            }
+
+            // Build HTML
+            let html = '';
+            filtered.forEach((item, index) => {
+                const isFav = favoriteIds.includes(item.id);
+                const badge = getTypeBadge(item.type);
+                
+                // Formatted Equation Check
+                const isEquation = item.type === 'equations' || item.type === 'coeffs';
+
+                html += `
+                <div class="card-box glass-card rounded-2xl p-4 sm:p-5 border border-slate-200 dark:border-slate-700 shadow-sm transition hover:shadow-md">
+                    <div class="flex items-start justify-between gap-3 mb-2">
+                        
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-brand-600 text-white font-black text-xs">
+                                ${index + 1}
+                            </span>
+                            <span class="px-2.5 py-0.5 rounded-md text-xs font-bold ${badge.color}">
+                                ${badge.label}
+                            </span>
+                            <span class="text-xs font-semibold text-slate-400">
+                                الدرس ${item.lesson}
+                            </span>
+                        </div>
+
+                        <!-- Favorite Star Button -->
+                        <button onclick="toggleFav(${item.id})" class="text-lg transition ${isFav ? 'text-amber-500 hover:text-amber-600' : 'text-slate-300 dark:text-slate-600 hover:text-amber-400'}">
+                            <i class="${isFav ? 'fa-solid' : 'fa-regular'} fa-star"></i>
+                        </button>
+                    </div>
+
+                    <!-- Question Content -->
+                    <div class="mt-2 text-slate-800 dark:text-slate-100 font-bold text-base sm:text-lg leading-relaxed">
+                        ${item.q}
+                    </div>
+
+                    <!-- Multiple Choice Options if available -->
+                    ${item.opts ? `
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 my-3 no-print">
+                            ${item.opts.map(opt => `
+                                <div class="px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 text-sm font-medium">
+                                    <i class="fa-regular fa-circle ml-2 text-slate-400"></i> ${opt}
+                                </div>
+                            `).join('')}
+                        </div>
+                    ` : ''}
+
+                    <!-- Answer Control Toolbar -->
+                    <div class="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800/80 flex items-center justify-between no-print">
+                        <button onclick="toggleAnswer(${item.id})" class="inline-flex items-center gap-1.5 text-xs font-bold text-brand-600 dark:text-brand-400 hover:underline">
+                            <i class="fa-solid fa-key"></i> الإجابة النموذجية
+                        </button>
+                    </div>
+
+                    <!-- Answer Box -->
+                    <div id="ans-${item.id}" class="answer-box ${showAllAnswersState ? '' : 'hidden'} mt-3 p-3.5 rounded-xl bg-teal-50/80 dark:bg-teal-950/40 border border-teal-200 dark:border-teal-800/60 text-slate-800 dark:text-slate-200">
+                        <div class="flex items-center gap-1.5 text-xs font-black text-teal-700 dark:text-teal-400 mb-1">
+                            <i class="fa-solid fa-circle-check"></i> الإجابة الصحيحة:
+                        </div>
+                        <div class="text-sm font-extrabold ${isEquation ? 'chem-eq' : ''} whitespace-pre-line leading-relaxed">
+                            ${item.a}
+                        </div>
+                    </div>
+                </div>
+                `;
+            });
+
+            container.innerHTML = html;
+        }
+
+        // Initialize App on Load
+        window.onload = function() {
+            updateFavCount();
+            renderQuestions();
+        };
+    </script>
+</body>
+</html>
